@@ -1,14 +1,20 @@
 package br.com.mariana.vendas;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
+import static android.widget.AdapterView.*;
 
 
 public class ListarVendasActivity extends ActionBarActivity {
@@ -25,9 +31,24 @@ public class ListarVendasActivity extends ActionBarActivity {
         String[] from = {"_id", "preco","nome","la","lo"};
         int [] to = {R.id.txvId,R.id.txvPreco,R.id.txvNome,R.id.txvLa,R.id.txvLo};
 
-        SimpleCursorAdapter ad = new SimpleCursorAdapter(getBaseContext(),R.layout.model_listar,cursor,from,to);
+        final SimpleCursorAdapter ad = new SimpleCursorAdapter(getBaseContext(),R.layout.model_listar,cursor,from,to);
 
         lvwVendas.setAdapter(ad);
+
+        lvwVendas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView parent, View view, int position, long id) {
+                //SQLiteCursor c = (SQLiteCursor)ad.getAdapter().getItem(position);
+                SQLiteCursor c = (SQLiteCursor)ad.getItem(position);
+                Intent it = new Intent(getBaseContext(),MapsActivity.class);
+                it.putExtra("latitude",c.getDouble(c.getColumnIndex("la")));
+                it.putExtra("longitude",c.getDouble(c.getColumnIndex("lo")));
+                startActivity(it);
+            }
+
+        });
+
         db.close();
     }
 
