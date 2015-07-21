@@ -26,7 +26,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="#ffffff"
-        android:layout_marginTop="35dp" />
+        android:layout_marginTop="35dp"
+        android:clickable="true"
+        android:dropDownSelector="@color/button_material_light"
+        android:spinnerMode="dropdown" />
 
     <TextView
         android:layout_width="wrap_content"

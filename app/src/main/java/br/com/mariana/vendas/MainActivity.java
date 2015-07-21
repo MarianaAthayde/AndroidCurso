@@ -26,6 +26,10 @@ public class MainActivity extends ActionBarActivity {
         sqlProdutos.append("nome varchar(100),");
         sqlProdutos.append("preco DOUBLE(10,2));");
         db.execSQL(sqlProdutos.toString());
+        db.execSQL("INSERT INTO produtos(nome,preco) VALUES('Coca-Cola','2.50')");
+        db.execSQL("INSERT INTO produtos(nome,preco) VALUES('Guarana','1.50')");
+        db.execSQL("INSERT INTO produtos(nome,preco) VALUES('Fanta','1.25')");
+        db.execSQL("INSERT INTO produtos(nome,preco) VALUES('Sprite','1.25')");
 
         StringBuilder sqlVendas = new StringBuilder();
         sqlVendas.append("CREATE TABLE IF NOT EXISTS [vendas](");
@@ -35,6 +39,8 @@ public class MainActivity extends ActionBarActivity {
         sqlVendas.append("la DOUBLE(10,9),");
         sqlVendas.append("lo DOUBLE(10,9));");
         db.execSQL(sqlVendas.toString());
+
+        db.close();
     }
 
     public void NovaVenda_Click(View view){
