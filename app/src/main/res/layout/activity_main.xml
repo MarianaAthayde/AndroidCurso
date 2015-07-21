@@ -24,6 +24,7 @@
         android:layout_height="59dp"
         android:text="Listar Vendas"
         android:id="@+id/bt_lsVendas"
+        android:onClick="ListarVendas_Click"
         android:layout_below="@+id/bt_nvVenda"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

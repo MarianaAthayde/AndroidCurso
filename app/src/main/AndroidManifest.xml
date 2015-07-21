@@ -3,7 +3,7 @@
     package="br.com.mariana.vendas" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -22,6 +22,10 @@
         <activity
             android:name=".NovaVendaActivity"
             android:label="@string/title_activity_nova_venda" >
+        </activity>
+        <activity
+            android:name=".ListarVendasActivity"
+            android:label="@string/title_activity_listar_vendas" >
         </activity>
     </application>
 
