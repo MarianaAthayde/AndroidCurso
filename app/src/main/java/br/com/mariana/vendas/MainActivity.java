@@ -1,9 +1,13 @@
 package br.com.mariana.vendas;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,8 +16,30 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SQLiteDatabase db =  openOrCreateDatabase("vendas.db", Context.MODE_PRIVATE,null);
+
+
+        StringBuilder sqlProdutos = new StringBuilder();
+        sqlProdutos.append("CREATE TABLE IF NOT EXISTS [produtos](");
+        sqlProdutos.append("[_id] INTEGER PRIMARY KEY AUTOINCREMENT,");
+        sqlProdutos.append("nome varchar(100),");
+        sqlProdutos.append("preco DOUBLE(10,2));");
+        db.execSQL(sqlProdutos.toString());
+
+        StringBuilder sqlVendas = new StringBuilder();
+        sqlVendas.append("CREATE TABLE IF NOT EXISTS [vendas](");
+        sqlVendas.append("[_id] INTEGER PRIMARY KEY AUTOINCREMENT,");
+        sqlVendas.append("produto INTEGER,");
+        sqlVendas.append("preco DOUBLE(10,2),");
+        sqlVendas.append("la DOUBLE(10,9),");
+        sqlVendas.append("lo DOUBLE(10,9));");
+        db.execSQL(sqlVendas.toString());
     }
 
+    public void NovaVenda_Click(View view){
+        startActivity(new Intent(getBaseContext(),NovaVendaActivity.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
