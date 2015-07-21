@@ -1,8 +1,14 @@
 package br.com.mariana.vendas;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +18,10 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 
-public class NovaVendaActivity extends ActionBarActivity {
+public class NovaVendaActivity extends ActionBarActivity implements LocationListener {
 
+    private double la;
+    private double lo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +39,8 @@ public class NovaVendaActivity extends ActionBarActivity {
         SimpleCursorAdapter ad = new SimpleCursorAdapter(getBaseContext(),R.layout.spinner,cursor,from,to);
 
         spProdutos.setAdapter(ad);
+
+        db.close();
 
     }
 
@@ -57,5 +67,47 @@ public class NovaVendaActivity extends ActionBarActivity {
     }
 
     public void Salvar_Click(View view){
+        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        la = location.getLatitude();
+        lo = location.getLongitude();
+
+
+        SQLiteDatabase db = openOrCreateDatabase("vendas.db", Context.MODE_PRIVATE,null);
+
+        Spinner spProdutos = (Spinner)findViewById(R.id.sp_produto);
+        SQLiteCursor dados = (SQLiteCursor)spProdutos.getAdapter().getItem(spProdutos.getSelectedItemPosition());
+
+        ContentValues ctv = new ContentValues();
+        ctv.put("produto", dados.getInt(0));
+        ctv.put("preco", dados.getDouble(2));
+        ctv.put("la", la);
+        ctv.put("lo", lo);
+        db.insert("vendas","_id",ctv);
+
+        db.close();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
