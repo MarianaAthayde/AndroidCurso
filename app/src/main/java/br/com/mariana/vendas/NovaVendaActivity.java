@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class NovaVendaActivity extends ActionBarActivity implements LocationListener {
@@ -86,7 +87,10 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
         ctv.put("preco", dados.getDouble(2));
         ctv.put("la", la);
         ctv.put("lo", lo);
-        db.insert("vendas","_id",ctv);
+        if(db.insert("vendas","_id",ctv) > 0){
+            Toast.makeText(getBaseContext(),"Sucesso!",Toast.LENGTH_LONG).show();
+        }
+
 
         db.close();
     }

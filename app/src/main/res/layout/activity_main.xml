@@ -35,9 +35,22 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="59dp"
-        android:text="Sair"
-        android:id="@+id/bt_sair"
+        android:text="Replicar Servidor"
+        android:id="@+id/bt_dpServer"
         android:layout_below="@+id/bt_lsVendas"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="IniciarReplicacao_Click"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="59dp"
+        android:text="Sair"
+        android:id="@+id/bt_Sair"
+        android:layout_below="@+id/bt_dpServer"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp"

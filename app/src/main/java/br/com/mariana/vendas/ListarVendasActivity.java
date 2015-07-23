@@ -25,13 +25,13 @@ public class ListarVendasActivity extends ActionBarActivity {
         setContentView(R.layout.activity_listar_vendas);
 
         SQLiteDatabase db = openOrCreateDatabase("vendas.db", Context.MODE_PRIVATE,null);
-        ListView lvwVendas = (ListView)findViewById(R.id.ltw_Vendas);
+        final ListView lvwVendas = (ListView)findViewById(R.id.ltw_Vendas);
         Cursor cursor = db.rawQuery("SELECT vendas._id,vendas.preco, vendas.la, vendas.lo, produtos.nome FROM vendas INNER JOIN produtos on produtos._id=vendas.produto ORDER BY nome asc", null);
 
         String[] from = {"_id", "preco","nome","la","lo"};
         int [] to = {R.id.txvId,R.id.txvPreco,R.id.txvNome,R.id.txvLa,R.id.txvLo};
 
-        final SimpleCursorAdapter ad = new SimpleCursorAdapter(getBaseContext(),R.layout.model_listar,cursor,from,to);
+        SimpleCursorAdapter ad = new SimpleCursorAdapter(getBaseContext(),R.layout.model_listar,cursor,from,to);
 
         lvwVendas.setAdapter(ad);
 
@@ -40,7 +40,8 @@ public class ListarVendasActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 //SQLiteCursor c = (SQLiteCursor)ad.getAdapter().getItem(position);
-                SQLiteCursor c = (SQLiteCursor)ad.getItem(position);
+                //SQLiteCursor c = (SQLiteCursor)ad.getItem(position);
+                SQLiteCursor c = (SQLiteCursor)lvwVendas.getAdapter().getItem(position);
                 Intent it = new Intent(getBaseContext(),MapsActivity.class);
                 it.putExtra("latitude",c.getDouble(c.getColumnIndex("la")));
                 it.putExtra("longitude",c.getDouble(c.getColumnIndex("lo")));

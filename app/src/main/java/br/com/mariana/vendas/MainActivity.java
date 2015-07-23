@@ -51,6 +51,12 @@ public class MainActivity extends ActionBarActivity {
         startActivity(new Intent(getBaseContext(),ListarVendasActivity.class));
     }
 
+    public void IniciarReplicacao_Click(View view){
+        //startService(new Intent("rlsystem.INICIAR_REPLICACAO"));
+        Intent serviceIntent = new Intent(getBaseContext(),ExportarVendasService.class);
+        getBaseContext().startService(serviceIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
