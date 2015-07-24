@@ -1,5 +1,6 @@
 package br.com.mariana.vendas;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,6 +24,8 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
 
     private double la;
     private double lo;
+    LocationManager locationManager;
+    ProgressDialog pgd = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
         spProdutos.setAdapter(ad);
 
         db.close();
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
     }
 
@@ -68,11 +72,19 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
     }
 
     public void Salvar_Click(View view){
-        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
+        //LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        //Criteria criteria = new Criteria();
+        //String provider = locationManager.getBestProvider(criteria, false);
+        String provider = "gps";
+        //Location location = locationManager.getLastKnownLocation(provider);
+        locationManager.requestLocationUpdates(provider, 5000,0,this);
+        pgd = ProgressDialog.show(NovaVendaActivity.this,"Aguarde...", "Buscando a Localização!", true,false,null);
 
+        }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        pgd.dismiss();
         la = location.getLatitude();
         lo = location.getLongitude();
 
@@ -90,14 +102,8 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
         if(db.insert("vendas","_id",ctv) > 0){
             Toast.makeText(getBaseContext(),"Sucesso!",Toast.LENGTH_LONG).show();
         }
-
-
         db.close();
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
+        locationManager.removeUpdates(this);
     }
 
     @Override
@@ -112,6 +118,6 @@ public class NovaVendaActivity extends ActionBarActivity implements LocationList
 
     @Override
     public void onProviderDisabled(String provider) {
-
+        Toast.makeText(getBaseContext(),"GPS Desativado!",Toast.LENGTH_LONG);
     }
 }

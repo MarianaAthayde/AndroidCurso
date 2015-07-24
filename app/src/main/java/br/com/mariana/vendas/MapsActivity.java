@@ -73,9 +73,9 @@ public class MapsActivity extends FragmentActivity {
 
         map.addMarker(new MarkerOptions().position(location).title("A Venda ocorreu aqui!"));
 
-        map.moveCamera(newLatLngZoom(location, 20));
+        map.moveCamera(newLatLngZoom(location, 30));
 
-        map.animateCamera(zoomTo(10), 2000, null);
+        map.animateCamera(zoomTo(15), 2000, null);
 
     }
 }
