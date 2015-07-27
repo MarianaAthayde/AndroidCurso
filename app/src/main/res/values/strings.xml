@@ -6,4 +6,5 @@
     <string name="title_activity_nova_venda">NovaVendaActivity</string>
     <string name="title_activity_listar_vendas">ListarVendasActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_broadcast_receiver">BroadcastReceiverActivity</string>
 </resources>
